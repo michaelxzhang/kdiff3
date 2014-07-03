@@ -9,6 +9,7 @@
  ***************************************************************************/
 
 #include "progress.h"
+#include "common.h"
 
 #include <QProgressBar>
 #include <QVBoxLayout>
