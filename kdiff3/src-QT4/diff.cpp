@@ -1308,19 +1308,54 @@ void calcDiff3LineListUsingBC(
 
                if ( nofDisturbingLines>0 )//&& nofDisturbingLines < d.nofEquals*d.nofEquals+4 )
                {
+                  Diff3LineList::iterator i3_last_equal_A = d3ll.end();
+
+                  i3 = i3c;
+                  while( i3 != i3b )
+                  {
+                    if(i3->bAEqB)
+                    {
+                      i3_last_equal_A = i3;
+                    }
+                    i3++;
+                  }
+
+                  /* If i3_last_equal_A isn't still set to d3ll.end(), then
+                   * we've found a line in A that is equal to one in B
+                   * somewhere between i3c and i3b
+                   */
+                  bool before_or_on_equal_line_in_A = (i3_last_equal_A != d3ll.end());
+
                   // Move the disturbing lines up, out of sight.
                   i3 = i3c;
                   while( i3 != i3b )
                   {
-                     if ( (*i3).lineB != -1 )
+                     if ( (*i3).lineB != -1 ||
+                          (before_or_on_equal_line_in_A && i3->lineA != -1) )
                      {
                         Diff3Line d3l;
                         d3l.lineB = (*i3).lineB;
                         (*i3).lineB = -1;
+
+                        // Move A along if it matched B
+                        if(before_or_on_equal_line_in_A)
+                        {
+                          d3l.lineA = i3->lineA;
+                          d3l.bAEqB = i3->bAEqB;
+                          i3->lineA = -1;
+                          i3->bAEqC = false;
+                        }
+
                         (*i3).bAEqB = false;
                         (*i3).bBEqC = false;
                         d3ll.insert( i3c, d3l );
                      }
+
+                     if (i3 == i3_last_equal_A)
+                     {
+                        before_or_on_equal_line_in_A = false;
+                     }
+
                      ++i3;
                   }
                   nofDisturbingLines=0;
@@ -1350,19 +1385,54 @@ void calcDiff3LineListUsingBC(
 
                if ( nofDisturbingLines>0 )//&& nofDisturbingLines < d.nofEquals*d.nofEquals+4 )
                {
+                  Diff3LineList::iterator i3_last_equal_A = d3ll.end();
+
+                  i3 = i3b;
+                  while( i3 != i3c )
+                  {
+                    if(i3->bAEqC)
+                    {
+                      i3_last_equal_A = i3;
+                    }
+                    i3++;
+                  }
+
+                  /* If i3_last_equal_A isn't still set to d3ll.end(), then
+                   * we've found a line in A that is equal to one in C
+                   * somewhere between i3b and i3c
+                   */
+                  bool before_or_on_equal_line_in_A = (i3_last_equal_A != d3ll.end());
+
                   // Move the disturbing lines up.
                   i3 = i3b;
                   while( i3 != i3c )
                   {
-                     if ( (*i3).lineC != -1 )
+                     if ( (*i3).lineC != -1 ||
+                          (before_or_on_equal_line_in_A && i3->lineA != -1) )
                      {
                         Diff3Line d3l;
                         d3l.lineC = (*i3).lineC;
                         (*i3).lineC = -1;
+
+                        // Move A along if it matched C
+                        if(before_or_on_equal_line_in_A)
+                        {
+                          d3l.lineA = i3->lineA;
+                          d3l.bAEqC = i3->bAEqC;
+                          i3->lineA = -1;
+                          i3->bAEqB = false;
+                        }
+
                         (*i3).bAEqC = false;
                         (*i3).bBEqC = false;
                         d3ll.insert( i3b, d3l );
                      }
+
+                     if (i3 == i3_last_equal_A)
+                     {
+                        before_or_on_equal_line_in_A = false;
+                     }
+
                      ++i3;
                   }
                   nofDisturbingLines=0;
