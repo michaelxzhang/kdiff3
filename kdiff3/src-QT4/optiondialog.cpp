@@ -34,6 +34,7 @@
 #include <QPixmap>
 #include <QFrame>
 #include <QVBoxLayout>
+#include <QFontDialog>
 
 #include <kapplication.h>
 #include <kcolorbutton.h>
@@ -623,7 +624,7 @@ void OptionDialog::setupFontPage( void )
 
    QGridLayout *gbox = new QGridLayout();
    topLayout->addLayout( gbox );
-   int line=0;
+   //int line=0;
 
    // This currently does not work (see rendering in class DiffTextWindow)
    //OptionCheckBox* pItalicDeltas = new OptionCheckBox( i18n("Italic font for deltas"), false, "ItalicForDeltas", &m_options.m_bItalicForDeltas, page, this );
