@@ -24,6 +24,7 @@
 
 #include <kpagedialog.h>
 #include <QStringList>
+#include <QGroupBox>
 #include <list>
 #include <kcmdlineargs.h>
 
@@ -103,7 +104,19 @@ private:
 };
 
 
-
+class FontChooser : public QGroupBox
+{
+   Q_OBJECT
+   QFont m_font;
+   QPushButton* m_pSelectFont;
+   QLabel* m_pLabel;
+public:
+   FontChooser( QWidget* pParent );
+   QFont font();
+   void setFont( const QFont&, bool );
+private slots:
+   void slotSelectFont();
+};
 
 #endif
 

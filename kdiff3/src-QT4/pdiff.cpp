@@ -1450,6 +1450,7 @@ void KDiff3App::slotConfigureKeys()
 
 void KDiff3App::slotRefresh()
 {
+   QApplication::setFont( m_pOptions->m_appFont );
    if (m_pDiffTextWindow1!=0)
    {
       m_pDiffTextWindow1->setFont(m_pOptions->m_font);
