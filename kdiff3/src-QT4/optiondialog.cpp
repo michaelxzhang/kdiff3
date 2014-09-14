@@ -188,11 +188,51 @@ typedef OptionT<QPoint> OptionPoint;
 typedef OptionT<QSize> OptionSize;
 typedef OptionT<QStringList> OptionStringList;
 
-class OptionFontChooser : public KFontChooser, public OptionItemT<QFont>
+
+FontChooser::FontChooser( QWidget* pParent )
+: QGroupBox(pParent)
+{
+   QVBoxLayout* pLayout = new QVBoxLayout( this );
+   m_pSelectFont = new QPushButton(i18n("Select Font"), this );
+   connect(m_pSelectFont, SIGNAL(clicked()), this, SLOT(slotSelectFont()));
+   pLayout->addWidget(m_pSelectFont);
+
+   m_pLabel = new QLabel( "", this );
+   m_pLabel->setFont( m_font );
+   m_pLabel->setMinimumWidth(200);
+   QChar visualTab(0x2192);
+   QChar visualSpace((ushort)0xb7);
+   m_pLabel->setText( QString("The quick brown fox jumps over the river\n"
+                      "but the little red hen escapes with a shiver.\n"
+                      ":-)")+visualTab+visualSpace);
+   pLayout->addWidget(m_pLabel);
+}
+
+QFont FontChooser::font()
+{
+   return m_font;//QFont("courier",10);
+}
+
+void FontChooser::setFont( const QFont& font, bool )
+{
+   m_font = font;
+   m_pLabel->setFont( m_font );
+   //update();
+}
+
+void FontChooser::slotSelectFont()
+{
+   bool bOk;
+   m_font = QFontDialog::getFont(&bOk, m_font );
+   m_pLabel->setFont( m_font );
+}
+
+
+class OptionFontChooser : public FontChooser, public OptionItemT<QFont>
 {
 public:
    OptionFontChooser( const QFont& defaultVal, const QString& saveName, QFont* pVar, QWidget* pParent, OptionDialog* pOD ) :
-       KFontChooser( pParent ),
+       FontChooser( pParent ),
        OptionItemT<QFont>( pOD, saveName )
    {
       m_pVar = pVar;
@@ -571,19 +611,27 @@ void OptionDialog::setupFontPage( void )
       KGlobalSettings::fixedFont();
 #endif
 
+   static QFont defaultAppFont = QApplication::font();
+
+   OptionFontChooser* pAppFontChooser = new OptionFontChooser( defaultAppFont, "ApplicationFont", &m_options.m_appFont, page, this );
+   topLayout->addWidget( pAppFontChooser );
+   pAppFontChooser->setTitle(i18n("Application font"));
+
    OptionFontChooser* pFontChooser = new OptionFontChooser( defaultFont, "Font", &m_options.m_font, page, this );
    topLayout->addWidget( pFontChooser );
+   pFontChooser->setTitle(i18n("File view font"));
 
    QGridLayout *gbox = new QGridLayout();
    topLayout->addLayout( gbox );
    int line=0;
 
-   OptionCheckBox* pItalicDeltas = new OptionCheckBox( i18n("Italic font for deltas"), false, "ItalicForDeltas", &m_options.m_bItalicForDeltas, page, this );
-   gbox->addWidget( pItalicDeltas, line, 0, 1, 2 );
-   pItalicDeltas->setToolTip( i18n(
-      "Selects the italic version of the font for differences.\n"
-      "If the font doesn't support italic characters, then this does nothing.")
-      );
+   // This currently does not work (see rendering in class DiffTextWindow)
+   //OptionCheckBox* pItalicDeltas = new OptionCheckBox( i18n("Italic font for deltas"), false, "ItalicForDeltas", &m_options.m_bItalicForDeltas, page, this );
+   //gbox->addWidget( pItalicDeltas, line, 0, 1, 2 );
+   //pItalicDeltas->setToolTip( i18n(
+   //   "Selects the italic version of the font for differences.\n"
+   //   "If the font doesn't support italic characters, then this does nothing.")
+   //   );
 }
 
 

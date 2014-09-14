@@ -1002,7 +1002,7 @@ void DiffTextWindowData::writeLine(
                {
                   QColor lightc = diffBgColor;
                   frh.setBackground(lightc);
-                  frh.setFont(diffFont);
+                  // Setting italic font here doesn't work: Changing the font only when drawing is too late
                }
 
                frh.setPen( c );

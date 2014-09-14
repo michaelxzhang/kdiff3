@@ -1738,6 +1738,7 @@ void DirectoryMergeWindow::Data::prepareListView( ProgressProxy& pp )
    int currentIdx = 1;
    QTime t;
    t.start();
+   pp.setMaxNofSteps(nrOfFiles);
    for( j=m_fileMergeMap.begin(); j!=m_fileMergeMap.end(); ++j )
    {
       MergeFileInfos& mfi = j.value();
@@ -1747,7 +1748,7 @@ void DirectoryMergeWindow::Data::prepareListView( ProgressProxy& pp )
 
       pp.setInformation(
          i18n("Processing ") + QString::number(currentIdx) +" / "+ QString::number(nrOfFiles)
-         +"\n" + fileName, double(currentIdx) / nrOfFiles, false );
+         +"\n" + fileName, currentIdx, false );
       if ( pp.wasCancelled() ) break;
       ++currentIdx;
 
