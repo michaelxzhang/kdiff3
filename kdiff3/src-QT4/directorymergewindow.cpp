@@ -2359,7 +2359,7 @@ void DirectoryMergeWindow::mergeResultSaved(const QString& fileName)
    MergeFileInfos* pMFI = d->getMFI(mi);
    if ( pMFI==0 )
    {
-      KMessageBox::error( this, i18n("This should never happen: \n\nmergeResultSaved: m_pMFI=0\n\nIf you know how to reproduce this, please contact the program author."),i18n("Program Error") );
+      // This can happen if the same file is saved and modified and saved again. Nothing to do then.
       return;
    }
    if ( fileName == d->fullNameDest(*pMFI) )
