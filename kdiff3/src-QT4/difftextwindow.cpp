@@ -1069,6 +1069,20 @@ void DiffTextWindowData::writeLine(
    if ( bFastSelectionRange )
    {
       p.fillRect( xOffset + fontWidth-1, yOffset, 3, fontHeight, m_pOptions->m_fgColor );
+
+      //put a line at top and bottom of the current selected range
+      p.setPen( QPen( Qt::blue, 1, Qt::DashLine) );
+      int currSelectionyOffset = (fastSelectorLine1 - m_firstLine) * fontHeight;
+      p.drawLine( xOffset + 6, currSelectionyOffset, p.window().width(), currSelectionyOffset );
+      p.drawLine( xOffset + 6, currSelectionyOffset + (m_fastSelectorNofLines) *fontHeight-1, p.window().width(), currSelectionyOffset + (m_fastSelectorNofLines) *fontHeight-1);
+
+      //if no line then we fill a rectangle with pattern
+      if (srcLineIdx < 0)
+      {
+          p.setPen( QPen( Qt::green, 1, Qt::DashLine) );
+          int currSelectionyOffset = (fastSelectorLine1 - m_firstLine) * fontHeight;
+          p.fillRect(xOffset + 6, currSelectionyOffset, p.window().width(), (m_fastSelectorNofLines) *fontHeight-1, Qt::BDiagPattern);
+      }
    }
 
    // Check if line needs a manual diff help mark

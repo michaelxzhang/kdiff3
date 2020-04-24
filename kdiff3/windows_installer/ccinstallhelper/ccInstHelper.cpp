@@ -1,7 +1,7 @@
 // uninstallHelper.cpp : Defines the entry point for the console application.
 //
 #define _CRT_SECURE_NO_DEPRECATE
-#include "stdafx.h"
+//#include "stdafx.h"
 #include <iostream>
 #include <string>
 #include <vector>
