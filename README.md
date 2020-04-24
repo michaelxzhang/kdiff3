@@ -8,7 +8,6 @@ Made changes to followings:
 Here's what's looks like:
 ![kdiff3 compare](https://github.com/michaelxzhang/kdiff3/blob/master/kdiff3cmp.PNG)
 
-===============================================================================================================================
 KDiff3-Readme
 =============
 
