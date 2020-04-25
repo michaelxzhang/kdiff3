@@ -1066,6 +1066,13 @@ void DiffTextWindowData::writeLine(
       p.fillRect( xLeft, yOffset, fontWidth*2-1, fontHeight, c==m_pOptions->m_fgColor ? bgColor : c );
    }
 
+   //if no line then we fill a rectangle with pattern
+   if (srcLineIdx < 0)
+   {
+       p.setPen( QPen( Qt::gray, 1, Qt::DashLine) );
+       p.fillRect(xOffset + fontWidth-1, yOffset, p.window().width(), fontHeight, QBrush(Qt::lightGray, Qt::BDiagPattern));
+   }
+
    if ( bFastSelectionRange )
    {
       p.fillRect( xOffset + fontWidth-1, yOffset, 3, fontHeight, m_pOptions->m_fgColor );
@@ -1075,14 +1082,6 @@ void DiffTextWindowData::writeLine(
       int currSelectionyOffset = (fastSelectorLine1 - m_firstLine) * fontHeight;
       p.drawLine( xOffset + 6, currSelectionyOffset, p.window().width(), currSelectionyOffset );
       p.drawLine( xOffset + 6, currSelectionyOffset + (m_fastSelectorNofLines) *fontHeight-1, p.window().width(), currSelectionyOffset + (m_fastSelectorNofLines) *fontHeight-1);
-
-      //if no line then we fill a rectangle with pattern
-      if (srcLineIdx < 0)
-      {
-          p.setPen( QPen( Qt::green, 1, Qt::DashLine) );
-          int currSelectionyOffset = (fastSelectorLine1 - m_firstLine) * fontHeight;
-          p.fillRect(xOffset + 6, currSelectionyOffset, p.window().width(), (m_fastSelectorNofLines) *fontHeight-1, Qt::BDiagPattern);
-      }
    }
 
    // Check if line needs a manual diff help mark

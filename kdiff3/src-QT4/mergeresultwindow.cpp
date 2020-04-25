@@ -1853,6 +1853,20 @@ void MergeResultWindow::writeLine(
       p.drawLine( xOffset+2, yOffset, xOffset+2, yOffset+fontHeight-1 );
       p.drawLine( xOffset+3, yOffset, xOffset+3, yOffset+fontHeight-1 );*/
    }
+
+   if (( rangeMark & 4 ) && ( rangeMark & 1))
+   {
+      //put a line at top and bottom of the current selected range
+      p.setPen( QPen( Qt::blue, 1, Qt::DashLine) );
+      p.drawLine( xOffset + 2, yOffset, p.window().width(), yOffset );
+   }
+
+   if (( rangeMark & 4 ) && ( rangeMark & 2))
+   {
+      //put a line at top and bottom of the current selected range
+      p.setPen( QPen( Qt::blue, 1, Qt::DashLine) );
+      p.drawLine( xOffset + 2, yOffset + fontHeight, p.window().width(), yOffset + fontHeight );
+   }
 }
 
 void MergeResultWindow::setPaintingAllowed(bool bPaintingAllowed)
