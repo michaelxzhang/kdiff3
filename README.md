@@ -1,9 +1,11 @@
-# KDiff3
-Original copied from 'git clone https://git.code.sf.net/p/kdiff3/code kdiff3-code'
+# KDiff3 for Windows
+Original copied 0.9.98 from 'git clone https://git.code.sf.net/p/kdiff3/code kdiff3-code'
 
 Made changes to followings:
-1. Put lines at top and bottom of the current selection range
+1. Put lines at top and bottom of the current selected range in difference window
 2. Fill a rectange will pattern if noline
+3. Put lines at top and botton of the current selected range in merge window
+4. Changed default diff color and background color, make it easier to see the difference
 
 Here's what's looks like:
 ![kdiff3 compare](https://github.com/michaelxzhang/kdiff3/blob/master/kdiff3cmp.PNG)
