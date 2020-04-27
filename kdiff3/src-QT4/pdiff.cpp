@@ -2107,6 +2107,7 @@ void KDiff3App::slotMergeCurrentFile()
    if ( m_bDirCompare  &&  m_pDirectoryMergeWindow->isVisible()  &&  m_pDirectoryMergeWindow->isFileSelected() )
    {
       m_pDirectoryMergeWindow->mergeCurrentFile();
+      winHideMerge->setEnabled( true );
    }
    else if ( m_pMainWidget != 0 && m_pMainWidget->isVisible() )
    {
