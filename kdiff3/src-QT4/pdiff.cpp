@@ -1945,6 +1945,17 @@ void KDiff3App::slotDirViewToggle()
    slotUpdateAvailabilities();
 }
 
+void KDiff3App::slotWinHideMerge()
+{
+   if (m_pMergeResultWindow)
+   {
+      m_pMergeWindowFrame->hide();
+      m_pDiffTextWindow1->setFocus();
+      winToggleSplitOrientation->setChecked(true);
+      winHideMerge->setEnabled(false);
+   }
+}
+
 void KDiff3App::slotShowWindowAToggled()
 {
    if ( m_pDiffTextWindow1!=0 )
@@ -2121,6 +2132,7 @@ void KDiff3App::slotMergeCurrentFile()
          }
       }
       mainInit();
+      winHideMerge->setEnabled( true );
    }
 }
 

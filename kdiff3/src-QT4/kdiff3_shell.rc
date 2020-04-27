@@ -101,6 +101,7 @@
     <Action name="win_dir_show_both"/>
     <Action name="win_dir_view_toggle"/>
     <Action name="win_toggle_split_orientation"/>
+    <Action name="win_hide_merge"/>
   </Menu>
 </MenuBar>
 <ToolBar name="mainToolBar" iconText="icononly" fullWidth="true"><text>Main Toolbar</text>

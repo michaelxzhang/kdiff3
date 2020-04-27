@@ -607,7 +607,8 @@ void KDiff3App::initActions( KActionCollection* ac )
 #endif
    winFocusPrev = KDiff3::createAction< KAction >(i18n("Focus Prev Window"), KShortcut( Qt::ALT+Qt::Key_Left ), this, SLOT(slotWinFocusPrev()), ac, "win_focus_prev");
    winToggleSplitOrientation = KDiff3::createAction< KAction >(i18n("Toggle Split Orientation"), this, SLOT(slotWinToggleSplitterOrientation()), ac, "win_toggle_split_orientation");
-
+   winHideMerge = KDiff3::createAction< KAction >(i18n("Hide Merge Screen"), KShortcut( Qt::ALT+Qt::Key_Z ), this, SLOT(slotWinHideMerge()), ac, "win_hide_merge");
+   winHideMerge->setEnabled( false );
    dirShowBoth = KDiff3::createAction< KToggleAction >(i18n("Dir && Text Split Screen View"), KShortcut( Qt::ALT+Qt::Key_X ), this, SLOT(slotDirShowBoth()), ac, "win_dir_show_both");
    dirShowBoth->setChecked( true );
    dirViewToggle = KDiff3::createAction< KAction >(i18n("Toggle Between Dir && Text View"), this, SLOT(slotDirViewToggle()), ac, "win_dir_view_toggle");

@@ -243,6 +243,7 @@ class KDiff3App : public QSplitter
     KAction* winToggleSplitOrientation;
     KToggleAction *dirShowBoth;
     KAction *dirViewToggle;
+    KAction *winHideMerge;
     KToggleAction *overviewModeNormal;
     KToggleAction *overviewModeAB;
     KToggleAction *overviewModeAC;
@@ -355,6 +356,7 @@ public slots:
 
    void slotDirShowBoth();
    void slotDirViewToggle();
+   void slotWinHideMerge();
 
    void slotUpdateAvailabilities();
    void slotEditSelectAll();
