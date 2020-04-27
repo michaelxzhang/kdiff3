@@ -682,7 +682,7 @@ void OptionDialog::setupColorPage( void )
   ++line;
 
   OptionColorButton* pDiffBgColor = new OptionColorButton( 
-     bLowColor ? QColor(Qt::lightGray) : qRgb(224,224,224), "DiffBgColor", &m_options.m_diffBgColor, page, this );
+     bLowColor ? QColor(Qt::lightGray) : qRgb(255,205,189), "DiffBgColor", &m_options.m_diffBgColor, page, this );
   label = new QLabel( i18n("Diff background color:"), page );
   label->setBuddy(pDiffBgColor);
   gbox->addWidget( label, line, 0 );
@@ -720,8 +720,7 @@ void OptionDialog::setupColorPage( void )
   gbox->addWidget( pColorForConflict, line, 1 );
   ++line;
 
-  OptionColorButton* pColor = new OptionColorButton( 
-     bLowColor ? qRgb(192,192,192) : qRgb(220,220,100), "CurrentRangeBgColor", &m_options.m_currentRangeBgColor, page, this );
+  OptionColorButton* pColor = new OptionColorButton( Qt::white, "CurrentRangeBgColor", &m_options.m_currentRangeBgColor, page, this );
   label = new QLabel( i18n("Current range background color:"), page );
   label->setBuddy(pColor);
   gbox->addWidget( label, line, 0 );
@@ -729,7 +728,7 @@ void OptionDialog::setupColorPage( void )
   ++line;
 
   pColor = new OptionColorButton( 
-     bLowColor ? qRgb(255,255,0) : qRgb(255,255,150), "CurrentRangeDiffBgColor", &m_options.m_currentRangeDiffBgColor, page, this );
+     bLowColor ? qRgb(255,255,0) : qRgb(255,205,189), "CurrentRangeDiffBgColor", &m_options.m_currentRangeDiffBgColor, page, this );
   label = new QLabel( i18n("Current range diff background color:"), page );
   label->setBuddy(pColor);
   gbox->addWidget( label, line, 0 );

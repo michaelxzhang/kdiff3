@@ -140,14 +140,16 @@ enum Columns
 {
    s_NameCol = 0,
    s_ACol = 1,
-   s_BCol = 2,
-   s_CCol = 3,
-   s_OpCol = 4,
-   s_OpStatusCol = 5,
-   s_UnsolvedCol = 6,    // Nr of unsolved conflicts (for 3 input files)
-   s_SolvedCol = 7,      // Nr of auto-solvable conflicts (for 3 input files)
-   s_NonWhiteCol = 8,    // Nr of nonwhite deltas (for 2 input files)
-   s_WhiteCol = 9        // Nr of white deltas (for 2 input files)
+   s_CmpAB = 2,
+   s_BCol = 3,
+   s_CmpBC = 4,
+   s_CCol = 5,
+   s_OpCol = 6,
+   s_OpStatusCol = 7,
+   s_UnsolvedCol = 8,    // Nr of unsolved conflicts (for 3 input files)
+   s_SolvedCol = 9,      // Nr of auto-solvable conflicts (for 3 input files)
+   s_NonWhiteCol = 10,    // Nr of nonwhite deltas (for 2 input files)
+   s_WhiteCol = 11        // Nr of white deltas (for 2 input files)
 };
 
 enum e_OperationStatus
@@ -280,7 +282,7 @@ public:
    }
    int	columnCount ( const QModelIndex & /*parent*/ ) const 
    {
-      return 10;
+      return 12;
    }
    QModelIndex	index ( int row, int column, const QModelIndex & parent ) const
    {
@@ -522,9 +524,9 @@ QVariant DirectoryMergeWindow::Data::data( const QModelIndex & index, int role )
             case eMergeToA:         return i18n("Merge to A");      break;
             case eMergeToB:         return i18n("Merge to B");      break;
             case eMergeToAB:        return i18n("Merge to A & B");  break;
-            case eCopyAToDest:      return "A";    break;
-            case eCopyBToDest:      return "B";    break;
-            case eCopyCToDest:      return "C";    break;
+            case eCopyAToDest:      return "Use A";    break;
+            case eCopyBToDest:      return "Use B";    break;
+            case eCopyCToDest:      return "Use C";    break;
             case eDeleteFromDest:   return i18n("Delete (if exists)");  break;
             case eMergeABCToDest:   return bDir ? i18n("Merge") : i18n("Merge (manual)");    break;
             case eMergeABToDest:    return bDir ? i18n("Merge") : i18n("Merge (manual)");    break;
@@ -546,6 +548,20 @@ QVariant DirectoryMergeWindow::Data::data( const QModelIndex & index, int role )
             case eOpStatusInProgress: return i18n("In progress...");
             case eOpStatusToDo: return i18n("To do.");
             }
+         }
+         if ( s_CmpAB == index.column() )
+         {
+            if (pMFI->m_ageA == pMFI->m_ageB)
+               return i18n("=");
+            else
+               return i18n("!=");
+         }
+         if ( s_CmpBC == index.column() )
+         {
+            if (pMFI->m_ageB == pMFI->m_ageC)
+               return i18n("=");
+            else
+               return i18n("!=");
          }
       }
       else if ( role == Qt::DecorationRole )
@@ -574,6 +590,9 @@ QVariant DirectoryMergeWindow::Data::data( const QModelIndex & index, int role )
          if ( s_UnsolvedCol == index.column() || s_SolvedCol == index.column() 
             || s_NonWhiteCol == index.column() || s_WhiteCol == index.column() )
             return Qt::AlignRight;
+
+         if ( s_CmpAB == index.column() || s_CmpBC == index.column() )
+            return Qt::AlignCenter;
       }
    }
    return QVariant();
@@ -587,7 +606,9 @@ QVariant DirectoryMergeWindow::Data::headerData ( int section, Qt::Orientation o
       {
       case s_NameCol:     return i18n("Name");
       case s_ACol:        return "A";
+      case s_CmpAB:       return i18n("<=>");
       case s_BCol:        return "B";
+      case s_CmpBC:       return i18n("<=>");
       case s_CCol:        return "C";
       case s_OpCol:       return i18n("Operation");
       case s_OpStatusCol: return i18n("Status");
