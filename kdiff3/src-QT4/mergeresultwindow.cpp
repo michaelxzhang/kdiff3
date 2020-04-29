@@ -1857,14 +1857,14 @@ void MergeResultWindow::writeLine(
    if (( rangeMark & 4 ) && ( rangeMark & 1))
    {
       //put a line at top and bottom of the current selected range
-      p.setPen( QPen( Qt::blue, 1, Qt::DashLine) );
+      p.setPen( QPen( Qt::gray, 1, Qt::SolidLine) );
       p.drawLine( xOffset + 6, yOffset, p.window().width(), yOffset );
    }
 
    if (( rangeMark & 4 ) && ( rangeMark & 2))
    {
       //put a line at top and bottom of the current selected range
-      p.setPen( QPen( Qt::blue, 1, Qt::DashLine) );
+      p.setPen( QPen( Qt::gray, 1, Qt::SolidLine) );
       p.drawLine( xOffset + 6, yOffset + fontHeight - 1, p.window().width(), yOffset + fontHeight - 1 );
    }
 }
