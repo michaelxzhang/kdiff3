@@ -1088,8 +1088,8 @@ void DiffTextWindowData::writeLine(
 
    int current_yOffset = (m_pDiffTextWindow->convertDiff3LineIdxToLine(m_currentline) - m_firstLine) * fontHeight;
    p.setPen( QPen( Qt::gray, 2, Qt::SolidLine) );
-   p.drawLine( xOffset+2, current_yOffset , p.window().width(), current_yOffset );
-   p.drawLine( xOffset+2, current_yOffset + fontHeight, p.window().width(), current_yOffset + fontHeight );
+   p.drawLine( xOffset+3, current_yOffset , p.window().width(), current_yOffset );
+   p.drawLine( xOffset+3, current_yOffset + fontHeight, p.window().width(), current_yOffset + fontHeight );
 
    // Check if line needs a manual diff help mark
    ManualDiffHelpList::const_iterator ci;
