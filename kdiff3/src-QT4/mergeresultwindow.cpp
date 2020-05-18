@@ -844,9 +844,18 @@ void MergeResultWindow::slotSetFastSelectorLine( int line )
    {
       if ( line>=i->d3lLineIdx  && line < i->d3lLineIdx + i->srcRangeLength )
       {
-         //if ( i->bDelta )
+         if ( i->bDelta )
          {
             setFastSelector( i );
+         }
+         else
+         {
+            if ( i!=m_mergeLineList.end() )
+               m_currentMergeLineIt = i;
+
+            update();
+            updateSourceMask();
+            emit updateAvailabilities();
          }
          break;
       }

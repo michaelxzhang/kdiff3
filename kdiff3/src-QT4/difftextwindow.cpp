@@ -452,22 +452,17 @@ void DiffTextWindow::mousePressEvent ( QMouseEvent* e )
       int fontWidth = fontMetrics().width('0');
       int xOffset = d->leftInfoWidth() * fontWidth;
 
-      if ( (! d->m_pOptions->m_bRightToLeftLanguage && e->x() < xOffset )
-           || ( d->m_pOptions->m_bRightToLeftLanguage && e->x() > width() - xOffset ) )
-      {
-         emit setFastSelectorLine( convertLineToDiff3LineIdx(line) );
-         d->m_selection.firstLine = -1;     // Disable current d->m_selection
-      }
-      else
-      {  // Selection
-         resetSelection();
-         d->m_selection.start( line, pos );
-         d->m_selection.end( line, pos );
-         d->m_bSelectionInProgress = true;
-         d->m_lastKnownMousePos = e->pos();
-         d->m_currentline = line;
-         showStatusLine( line );
-      }
+      resetSelection();
+      d->m_selection.start( line, pos );
+      d->m_selection.end( line, pos );
+      d->m_bSelectionInProgress = true;
+      d->m_lastKnownMousePos = e->pos();
+      d->m_currentline = line;
+      showStatusLine( line );
+
+      emit setFastSelectorLine( convertLineToDiff3LineIdx(line) );
+      d->m_selection.firstLine = -1;     // Disable current d->m_selection
+
    }
 }
 
@@ -1082,15 +1077,21 @@ void DiffTextWindowData::writeLine(
       //put a line at top and bottom of the current selected range
       p.setPen( QPen( Qt::gray, 1, Qt::SolidLine) );
       int currSelectionyOffset = (fastSelectorLine1 - m_firstLine) * fontHeight;
-      p.drawLine( xOffset + 6, currSelectionyOffset, p.window().width(), currSelectionyOffset );
-      p.drawLine( xOffset + 6, currSelectionyOffset + (m_fastSelectorNofLines) *fontHeight-1, p.window().width(), currSelectionyOffset + (m_fastSelectorNofLines) *fontHeight-1);
+      p.drawLine( xOffset + 9, currSelectionyOffset, p.window().width(), currSelectionyOffset );
+      p.drawLine( xOffset + 9, currSelectionyOffset + (m_fastSelectorNofLines) *fontHeight-1, p.window().width(), currSelectionyOffset + (m_fastSelectorNofLines) *fontHeight-1);
    }
 
-   int current_yOffset = (m_pDiffTextWindow->convertDiff3LineIdxToLine(m_currentline) - m_firstLine) * fontHeight;
-   p.setPen( QPen( Qt::gray, 2, Qt::SolidLine) );
-   p.drawLine( xOffset+3, current_yOffset , p.window().width(), current_yOffset );
-   p.drawLine( xOffset+3, current_yOffset + fontHeight, p.window().width(), current_yOffset + fontHeight );
+   int current_yOffset = (m_pDiffTextWindow->convertDiff3LineIdxToLine(m_currentline) - m_firstLine) * fontHeight;   
+   int extra_xOffset = 0;
 
+   if( fastSelectorLine1 <= m_currentline && m_currentline <= fastSelectorLine2)
+      extra_xOffset = 7;
+
+   p.setPen( QPen( Qt::lightGray, 2, Qt::SolidLine) );
+   p.drawLine( xOffset+3+extra_xOffset, current_yOffset , p.window().width(), current_yOffset );
+   p.drawLine( xOffset+3+extra_xOffset, current_yOffset + fontHeight, p.window().width(), current_yOffset + fontHeight );
+
+   
    // Check if line needs a manual diff help mark
    ManualDiffHelpList::const_iterator ci;
    for( ci = m_pManualDiffHelpList->begin(); ci!=m_pManualDiffHelpList->end(); ++ci)
