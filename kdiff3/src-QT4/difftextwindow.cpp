@@ -64,6 +64,7 @@ public:
       m_pOptions = 0;
       m_fastSelectorLine1 = 0;
       m_fastSelectorNofLines = 0;
+      m_currentline = 0;
       m_bTriple = 0;
       m_winIdx = 0;
       m_firstLine = 0;
@@ -117,6 +118,7 @@ public:
 
    int m_fastSelectorLine1;
    int m_fastSelectorNofLines;
+   int m_currentline;
 
    bool m_bTriple;
    int m_winIdx;
@@ -224,6 +226,7 @@ void DiffTextWindow::init(
    d->m_bMyUpdate = false;
    d->m_fastSelectorLine1 = 0;
    d->m_fastSelectorNofLines = 0;
+   d->m_currentline = 0;
    d->m_lineNumberWidth = 0;
    d->m_maxTextWidth = -1;
    d->m_selection.reset();
@@ -462,7 +465,7 @@ void DiffTextWindow::mousePressEvent ( QMouseEvent* e )
          d->m_selection.end( line, pos );
          d->m_bSelectionInProgress = true;
          d->m_lastKnownMousePos = e->pos();
-
+         d->m_currentline = line;
          showStatusLine( line );
       }
    }
@@ -1082,6 +1085,11 @@ void DiffTextWindowData::writeLine(
       p.drawLine( xOffset + 6, currSelectionyOffset, p.window().width(), currSelectionyOffset );
       p.drawLine( xOffset + 6, currSelectionyOffset + (m_fastSelectorNofLines) *fontHeight-1, p.window().width(), currSelectionyOffset + (m_fastSelectorNofLines) *fontHeight-1);
    }
+
+   int current_yOffset = (m_pDiffTextWindow->convertDiff3LineIdxToLine(m_currentline) - m_firstLine) * fontHeight;
+   p.setPen( QPen( Qt::gray, 2, Qt::SolidLine) );
+   p.drawLine( xOffset+2, current_yOffset , p.window().width(), current_yOffset );
+   p.drawLine( xOffset+2, current_yOffset + fontHeight, p.window().width(), current_yOffset + fontHeight );
 
    // Check if line needs a manual diff help mark
    ManualDiffHelpList::const_iterator ci;
