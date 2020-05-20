@@ -452,6 +452,9 @@ void DiffTextWindow::mousePressEvent ( QMouseEvent* e )
       int fontWidth = fontMetrics().width('0');
       int xOffset = d->leftInfoWidth() * fontWidth;
 
+      emit setFastSelectorLine( convertLineToDiff3LineIdx(line) );
+      d->m_selection.firstLine = -1;     // Disable current d->m_selection
+
       resetSelection();
       d->m_selection.start( line, pos );
       d->m_selection.end( line, pos );
@@ -459,9 +462,6 @@ void DiffTextWindow::mousePressEvent ( QMouseEvent* e )
       d->m_lastKnownMousePos = e->pos();
       d->m_currentline = line;
       showStatusLine( line );
-
-      emit setFastSelectorLine( convertLineToDiff3LineIdx(line) );
-      d->m_selection.firstLine = -1;     // Disable current d->m_selection
 
    }
 }
