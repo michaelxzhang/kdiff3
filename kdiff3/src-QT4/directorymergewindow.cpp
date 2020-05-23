@@ -1096,6 +1096,7 @@ bool DirectoryMergeWindow::Data::init
 //   setColumnWidthMode(s_WhiteCol,    Q3ListView::Manual);
 //   setColumnWidthMode(s_NonWhiteCol, Q3ListView::Manual);
    q->setColumnHidden( s_CCol,    !m_dirC.isValid() );
+   q->setColumnHidden( s_CmpBC,   !m_dirC.isValid() );
    q->setColumnHidden( s_WhiteCol,    !m_pOptions->m_bDmFullAnalysis );
    q->setColumnHidden( s_NonWhiteCol, !m_pOptions->m_bDmFullAnalysis );
    q->setColumnHidden( s_UnsolvedCol, !m_pOptions->m_bDmFullAnalysis );
