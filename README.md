@@ -10,6 +10,11 @@ Made changes to followings:
 Here's what's looks like:
 ![kdiff3 compare](https://github.com/michaelxzhang/kdiff3/blob/master/kdiff3cmp.PNG)
 
+[Download Windows Installer](https://github.com/michaelxzhang/kdiff3/releases/download/0.9.99-rc2/KDiff3-64bit-Setup_0.9.99.exe)
+---------------------------------
+
+
+
 KDiff3-Readme
 =============
 
